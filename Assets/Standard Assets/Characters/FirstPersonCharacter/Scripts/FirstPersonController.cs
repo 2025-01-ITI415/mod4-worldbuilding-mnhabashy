@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -42,6 +45,26 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        public Text countText;
+        public Text countdownText;
+        public Text instructionsText;
+
+        // Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
+        private Rigidbody rb;
+        public int count;
+
+        public float timeRemaining = 1200f; // 20 minutes = 1200 seconds
+        private bool timerIsRunning = true;
+
+        private IEnumerator ShowInstructionsText(string instructions, float duration) {
+            instructionsText.text = instructions;
+            instructionsText.enabled = true;
+
+            yield return new WaitForSeconds(duration);
+
+            instructionsText.enabled = false;
+        }
+
         // Use this for initialization
         private void Start()
         {
@@ -55,6 +78,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+
+            // Assign the Rigidbody component to our private rb variable
+            rb = GetComponent<Rigidbody>();
+
+            // Set the count to one 
+            count = 1;
+
+            // Run the SetCountText function to update the UI (see below)
+            SetCountText();
+
+            StartCoroutine(ShowInstructionsText("Use WASD to move. Walk into keys to collect. Follow the whispers", 5f));
         }
 
 
@@ -81,6 +115,24 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
+
+            if (timerIsRunning) {
+                if (timeRemaining > 0) {
+                    timeRemaining -= Time.deltaTime;
+                    UpdateTimerDisplay(timeRemaining);
+                } else {
+                    timeRemaining = 0;
+                    timerIsRunning = false;
+                    m_MouseLook.SetCursorLock(false);
+                    UpdateTimerDisplay(0);
+                    SceneManager.LoadScene(3);
+                }
+            }
+        }
+
+        void UpdateTimerDisplay(float timeToDisplay) {
+            TimeSpan time = TimeSpan.FromSeconds(timeToDisplay);
+            countdownText.text = string.Format("{0:D2}:{1:D2}", time.Minutes, time.Seconds);
         }
 
 
@@ -254,6 +306,41 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 return;
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+        }
+
+        void OnTriggerEnter(Collider other) {
+            // ..and if the game object we intersect has the tag 'Pick Up' assigned to it..
+            if (other.gameObject.CompareTag("Key")) {
+                // Make the other game object (the pick up) inactive, to make it disappear
+                other.gameObject.SetActive(false);
+
+                // Add one to the score variable 'count'
+                count = count + 1;
+
+                // Run the 'SetCountText()' function (see below)
+                SetCountText();
+            }
+
+            if (other.gameObject.CompareTag("Door Instructions")) {
+                DoorInstructions();
+            }
+        }
+
+        // Create a standalone function that can update the 'countText' UI and check if the required amount to win has been achieved
+        public void SetCountText() {
+            // Update the text field of our 'countText' variable
+            countText.text = "Keys: " + count.ToString();
+
+            // Check if our 'count' is equal to 6
+            if (count == 6) {
+                StartCoroutine(ShowInstructionsText("GET BACK TO THE DOOR! HURRY!!!", 5f));
+            }
+        }
+
+        void DoorInstructions() {
+            if (count == 6) {
+                StartCoroutine(ShowInstructionsText("Walk into the door to insert the keys", 5f));
+            }
         }
     }
 }

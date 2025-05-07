@@ -5,28 +5,55 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/MainMenu.unity
     guid: 5cbc63de0e5c241f68425b281181f509
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Labs/01-Probuilder/01-Probuilder.unity
     guid: 1cf9bb62474c84a0e87cdaff8cb74df7
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Labs/02-SNAPS/02-SNAPS.unity
     guid: c49e59542282f496181b161b92921a27
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Labs/03-Terrain/03-Terrain.unity
     guid: 582764cd13a824e96aeeddfa287eccee
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Labs/04-Lighting/04-Lighting.unity
     guid: 91816fc936dc449c9aa796d22b2266c7
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Labs/05-Audio/05-Audio.unity
     guid: 55f7f0d8e936348338230c89812f8e11
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Labs/06-Particles/06-Particles.unity
     guid: 9b6d9c98791c649bdb250b25906f649f
   - enabled: 1
+    path: Assets/_Labs/07-Prototype4/Title Screen.unity
+    guid: 4f1d60fe0fbfa48b7812a1fc459fc8e1
+  - enabled: 1
+    path: Assets/_Labs/07-Prototype4/Black Screen.unity
+    guid: 46b2b11044633413c978b392df516482
+  - enabled: 1
     path: Assets/_Labs/07-Prototype4/07-Prototype4.unity
     guid: a0d2a73e11b0743f4abfb05dbe92329b
+  - enabled: 1
+    path: Assets/_Labs/07-Prototype4/Black Screen 1.unity
+    guid: cd1ec60c53ade40529211dd4ffff7aeb
+  - enabled: 1
+    path: Assets/_Labs/07-Prototype4/07-Prototype4 1.unity
+    guid: 097e75bd5a3b8473fa62fc6c748f7f7f
+  - enabled: 1
+    path: Assets/_Labs/07-Prototype4/Black Screen 2.unity
+    guid: 81c0263baf7b04ef48c4832d9bc711d0
+  - enabled: 1
+    path: Assets/_Labs/07-Prototype4/Title Screen 1.unity
+    guid: ddc38689e74194170bc761368600ae3f
+  - enabled: 1
+    path: Assets/_Labs/07-Prototype4/Black Screen 3.unity
+    guid: a4c8d4b5cf5f744da8a9996fc3024048
+  - enabled: 1
+    path: Assets/_Labs/07-Prototype4/07-Prototype4 2.unity
+    guid: 9a5fce8c26b884e64ae22c730c237d7e
+  - enabled: 1
+    path: Assets/_Labs/07-Prototype4/Black Screen 4.unity
+    guid: c3ab22ee34a844b49b09455a40f76817
   m_configObjects: {}
